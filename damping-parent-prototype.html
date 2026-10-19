@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damping — Dashboard Orang Tua & Keluarga</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: {
+              DEFAULT: '#2D5A43',
+              dark: '#1E3D2D',
+              deep: '#152C20',
+              light: '#3D7B5C',
+              pale: '#EAF2ED',
+              soft: '#D5E5DC',
+            },
+            cream: {
+              DEFAULT: '#FBF9F5',
+              dark: '#F3EFEA',
+              border: '#EBE5DC',
+            },
+            warm: {
+              amber: '#D97706',
+              gold: '#F59E0B',
+              pale: '#FEF3C7',
+              terracotta: '#D95D39',
+              coral: '#F87171',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FBF9F5;
+      color: #1F2937;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3EFEA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+    .card-shadow {
+      box-shadow: 0 4px 20px -2px rgba(45, 90, 67, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.03);
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -3px rgba(45, 90, 67, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+    }
+    .fade-in {
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row text-gray-800">
+
+  <!-- ==================== SIDEBAR DESKTOP ==================== -->
+  <aside class="hidden md:flex flex-col w-72 bg-white border-r border-cream-border sticky top-0 h-screen z-30 select-none">
+    <!-- Header Brand -->
+    <div class="p-6 border-b border-cream-border/60">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-sage flex items-center justify-center text-white font-serif font-bold text-xl shadow-md shadow-sage/20">
+          D
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-serif font-bold text-2xl tracking-tight text-sage-deep">Damping</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sage-pale text-sage uppercase tracking-wider">Keluarga</span>
+          </div>
+          <p class="text-xs text-gray-500 mt-0.5">Pendampingan Anak & Belajar</p>
+        </div>
+      </div>
+
+      <!-- Quick Switcher Anak -->
+      <div class="mt-5 p-2.5 rounded-xl bg-cream border border-cream-border flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div id="sidebar-avatar" class="w-8 h-8 rounded-full bg-sage-light text-white font-bold flex items-center justify-center text-xs shadow-sm">
+            R
+          </div>
+          <div>
+            <div id="sidebar-child-name" class="text-xs font-bold text-gray-800">Rafi Ramadhan</div>
+            <div id="sidebar-child-age" class="text-[11px] text-gray-500">7 tahun · Kelas 1 SD</div>
+          </div>
+        </div>
+        <select id="child-select-sidebar" onchange="switchChild(this.value)" class="text-xs bg-white border border-gray-200 rounded-lg px-2 py-1 text-gray-700 font-medium focus:outline-none focus:border-sage cursor-pointer">
+          <option value="rafi">Rafi (7 th)</option>
+          <option value="alya">Alya (4 th)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+      <button onclick="navigate('beranda')" id="nav-beranda" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-sage bg-sage-pale transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Beranda</span>
+      </button>
+
+      <button onclick="navigate('profil')" id="nav-profil" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span>Profil & Potensi Anak</span>
+      </button>
+
+      <button onclick="navigate('screening')" id="nav-screening" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="flex-1 text-left">Screening Awal</span>
+        <span id="badge-screening" class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">Rekomendasi</span>
+      </button>
+
+      <button onclick="navigate('misi')" id="nav-misi" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="flex-1 text-left">Misi Belajar</span>
+        <span id="badge-misi-count" class="text-[10px] bg-sage text-white font-bold px-1.5 py-0.5 rounded">6 Misi</span>
+      </button>
+
+      <button onclick="navigate('eksplorasi')" id="nav-eksplorasi" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Eksplorasi Satwa & Alam</span>
+      </button>
+
+      <button onclick="navigate('progres')" id="nav-progres" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Progres Anak</span>
+      </button>
+
+      <button onclick="navigate('jurnal')" id="nav-jurnal" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span class="flex-1 text-left">Jurnal Orang Tua</span>
+        <span id="badge-jurnal-count" class="text-[10px] bg-gray-200 text-gray-700 font-bold px-1.5 py-0.5 rounded">2</span>
+      </button>
+
+      <div class="pt-2 pb-1">
+        <div class="h-px bg-gray-200"></div>
+      </div>
+
+      <button onclick="navigate('layanan')" id="nav-layanan" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+        <span class="flex-1 text-left">Layanan Belajar Damping</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      </button>
+
+      <button onclick="navigate('pengaturan')" id="nav-pengaturan" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-cream hover:text-gray-900 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Pengaturan</span>
+      </button>
+    </nav>
+
+    <!-- Footer Mini Profil Ortu -->
+    <div class="p-4 border-t border-cream-border/60 bg-cream/40">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-amber-200 text-amber-900 font-bold flex items-center justify-center text-xs">
+            BS
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-xs font-bold text-gray-800 truncate">Bunda Sarah</div>
+            <div class="text-[10px] text-gray-500 truncate">sarah.bunda@gmail.com</div>
+          </div>
+        </div>
+        <button onclick="resetDemoData()" title="Reset data demo" class="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-white text-xs">
+          🔄
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MOBILE TOP BAR ==================== -->
+  <header class="md:hidden bg-white border-b border-cream-border px-4 py-3 flex items-center justify-between sticky top-0 z-20">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-sage flex items-center justify-center text-white font-serif font-bold text-base shadow">
+        D
+      </div>
+      <div>
+        <div class="flex items-center gap-1.5">
+          <span class="font-serif font-bold text-lg text-sage-deep">Damping</span>
+          <span class="text-[9px] font-bold px-1 rounded bg-sage-pale text-sage">Ortu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Child Switcher -->
+    <div class="flex items-center gap-2">
+      <select onchange="switchChild(this.value)" class="text-xs bg-cream border border-cream-border rounded-lg px-2 py-1 text-gray-700 font-medium">
+        <option value="rafi">Rafi (7 th)</option>
+        <option value="alya">Alya (4 th)</option>
+      </select>
+      <button onclick="openModal('modal-menu-mobile')" class="p-1.5 rounded-lg text-gray-600 hover:bg-cream">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="flex-1 bg-cream min-h-screen pb-24 md:pb-12">
+    <!-- Top notification banner demo -->
+    <div class="bg-sage text-white text-xs px-4 py-1.5 flex items-center justify-between">
+      <div class="flex items-center gap-2 mx-auto">
+        <span class="bg-white/20 text-white px-1.5 py-0.2 rounded font-bold text-[10px]">PROTOTYPE</span>
+        <span>Simulasi UI/UX Dashboard Orang Tua Damping (Terisolasi dari Database Produksi)</span>
+      </div>
+      <button onclick="resetDemoData()" class="underline text-[11px] opacity-80 hover:opacity-100 hidden sm:inline">Reset Demo</button>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 md:px-8 py-6">
+
+      <!-- ==================== SECTION 1: BERANDA ==================== -->
+      <section id="view-beranda" class="fade-in space-y-6">
+        <!-- Greeting Header -->
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-sage-pale rounded-full opacity-60 pointer-events-none"></div>
+          <div class="relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage-pale text-sage text-xs font-semibold mb-3">
+              <span>🌿</span>
+              <span>Pendampingan Belajar Hari Ini</span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+              Selamat pagi, <span id="beranda-parent-name">Bunda Sarah</span>.
+            </h1>
+            <p id="beranda-quote" class="text-gray-600 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+              "Setiap rasa ingin tahu yang ditanggapi dengan hangat adalah fondasi keberanian anak untuk terus belajar."
+            </p>
+
+            <!-- 3 Pertanyaan Penting yang Langsung Terjawab -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-6 pt-6 border-t border-cream-border">
+              <div class="p-3.5 rounded-2xl bg-cream border border-cream-border">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-sage">1. Proses Belajar Anak</div>
+                <div id="quick-ans-1" class="text-xs font-medium text-gray-800 mt-1">
+                  Rafi sedang fokus melatih ketelitian dan daya tahan menyelesaikan tugas mandiri.
+                </div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-cream border border-cream-border">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-warm-amber">2. Bisa Dilakukan Hari Ini</div>
+                <div id="quick-ans-2" class="text-xs font-medium text-gray-800 mt-1">
+                  Misi 15 menit: <strong class="text-gray-900">Detektif Daun</strong> sebelum sesi bermain sore.
+                </div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-cream border border-cream-border">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">3. Langkah Berikutnya</div>
+                <div id="quick-ans-3" class="text-xs font-medium text-gray-800 mt-1">
+                  Hubungkan hasil pengamatan daun dengan sesi sains les privat besok Rabu.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Card Rekomendasi Hari Ini -->
+        <div class="bg-gradient-to-br from-emerald-800 via-sage to-sage-dark rounded-3xl p-6 md:p-8 text-white card-shadow relative overflow-hidden">
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3 max-w-xl">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/20 text-white text-xs font-semibold">
+                <span>⭐ Rekomendasi Pilihan untuk <span id="hero-child-name">Rafi</span></span>
+              </div>
+              <h2 id="hero-activity-title" class="text-2xl font-serif font-bold tracking-tight">
+                Detektif Daun: Mengamati Pola di Alam Sekitar
+              </h2>
+              <p id="hero-activity-desc" class="text-white/80 text-sm leading-relaxed">
+                Ajak anak mengamati 3 jenis daun berbeda di halaman. Bandingkan tulang daun, rasakan teksturnya, dan hitung urutan dari yang paling kecil ke paling besar.
+              </p>
+              <div class="flex flex-wrap items-center gap-3 pt-2 text-xs text-white/90">
+                <span class="flex items-center gap-1 bg-white/15 px-2.5 py-1 rounded-md">⏱️ 15 Menit</span>
+                <span class="flex items-center gap-1 bg-white/15 px-2.5 py-1 rounded-md">🍃 Alam & Satwa</span>
+                <span class="flex items-center gap-1 bg-white/15 px-2.5 py-1 rounded-md">🔍 Latih Ketelitian</span>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row md:flex-col gap-2.5">
+              <button onclick="startMissionFromHome()" class="px-6 py-3 rounded-xl bg-white text-sage-deep font-bold text-sm shadow hover:bg-cream transition-all flex items-center justify-center gap-2">
+                <span>Mulai Misi Ini</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </button>
+              <button onclick="navigate('misi')" class="px-5 py-2.5 rounded-xl bg-white/15 hover:bg-white/20 text-white font-medium text-xs text-center transition">
+                Lihat 5 Misi Lainnya
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Kolom: Progres Mingguan & Pencapaian Kecil -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Kartu Progres Mingguan -->
+          <div class="bg-white rounded-3xl p-6 border border-cream-border card-shadow space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-serif font-bold text-lg text-gray-900">Aktivitas Pekan Ini</h3>
+                <p class="text-xs text-gray-500">Membiasakan momen belajar 15 menit setiap hari</p>
+              </div>
+              <span id="home-progress-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-sage-pale text-sage">
+                3 dari 5 Selesai
+              </span>
+            </div>
+
+            <!-- Stepper Hari -->
+            <div class="grid grid-cols-5 gap-2 pt-2">
+              <div class="text-center">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">✓</div>
+                <span class="text-[10px] text-gray-500 mt-1 block">Senin</span>
+              </div>
+              <div class="text-center">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">✓</div>
+                <span class="text-[10px] text-gray-500 mt-1 block">Selasa</span>
+              </div>
+              <div class="text-center">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">✓</div>
+                <span class="text-[10px] text-gray-500 mt-1 block">Rabu</span>
+              </div>
+              <div class="text-center">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-amber-50 border-2 border-dashed border-amber-400 text-amber-600 flex items-center justify-center font-bold text-sm">●</div>
+                <span class="text-[10px] font-bold text-amber-700 mt-1 block">Hari Ini</span>
+              </div>
+              <div class="text-center">
+                <div class="w-10 h-10 mx-auto rounded-xl bg-gray-100 text-gray-400 flex items-center justify-center font-bold text-sm">5</div>
+                <span class="text-[10px] text-gray-400 mt-1 block">Jumat</span>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-cream border border-cream-border text-xs text-gray-600 leading-relaxed">
+              💡 <strong class="text-gray-800">Saran Pendampingan:</strong> Konsistensi lebih berharga dibanding durasi panjang. 15 menit penuh kehadiran jauh lebih berdampak bagi anak.
+            </div>
+          </div>
+
+          <!-- Kartu Catatan Pencapaian Kecil (Small Wins) -->
+          <div class="bg-white rounded-3xl p-6 border border-cream-border card-shadow space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-serif font-bold text-lg text-gray-900">Pencapaian Kecil</h3>
+                <p class="text-xs text-gray-500">Hal-hal bermakna yang diamati Bunda</p>
+              </div>
+              <button onclick="navigate('jurnal')" class="text-xs text-sage font-bold hover:underline">
+                + Tulis Jurnal
+              </button>
+            </div>
+
+            <div id="home-small-wins-list" class="space-y-2.5">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner Koneksi ke Layanan Guru Damping -->
+        <div class="bg-white rounded-3xl p-6 border border-cream-border card-shadow flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-sage-pale flex items-center justify-center text-sage text-2xl shrink-0">
+              👩‍🏫
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-sage">Sesi Les Privat Damping</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">Terkoneksi</span>
+              </div>
+              <h4 class="font-serif font-bold text-gray-900 text-base mt-0.5">Sesi Berikutnya: Matematika & Sains bersama Kak Hasna</h4>
+              <p class="text-xs text-gray-500 mt-1">Rabu, 21 Oktober · 15:30 WIB (Tutor Privat Mandiri)</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="navigate('layanan')" class="px-4 py-2.5 rounded-xl bg-cream hover:bg-cream-dark text-gray-700 font-semibold text-xs border border-cream-border transition">
+              Lihat Laporan Guru
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 2: PROFIL & POTENSI ANAK ==================== -->
+      <section id="view-profil" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-cream-border">
+            <div class="flex items-center gap-4">
+              <div id="profile-avatar" class="w-16 h-16 rounded-2xl bg-sage text-white font-serif font-bold text-2xl flex items-center justify-center shadow-md">
+                R
+              </div>
+              <div>
+                <h2 id="profile-name" class="font-serif font-bold text-2xl text-gray-900">Rafi Ramadhan</h2>
+                <p id="profile-meta" class="text-xs text-gray-500 mt-0.5">7 tahun · Kelas 1 SD · Bergabung sejak Juli 2026</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-sage-pale text-sage">
+                    Tipe Belajar: Kinestetik & Visual
+                  </span>
+                  <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                    Karakter: Pengamat Teliti
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button onclick="openModal('modal-edit-profile')" class="px-4 py-2.5 rounded-xl bg-sage text-white text-xs font-bold hover:bg-sage-dark transition shadow-sm flex items-center gap-1.5 self-start md:self-auto">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+              <span>Edit Data Contoh</span>
+            </button>
+          </div>
+
+          <!-- Detail Potensi & Minat -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-gray-900 text-lg">Minat & Ketertarikan yang Muncul</h3>
+              <div id="profile-interests-chips" class="flex flex-wrap gap-2">
+                <!-- Dynamically populated -->
+              </div>
+
+              <div class="p-4 rounded-2xl bg-cream border border-cream-border space-y-2 mt-4">
+                <div class="text-xs font-bold text-sage uppercase tracking-wider">Tujuan Pendampingan Orang Tua</div>
+                <p id="profile-goals" class="text-xs text-gray-700 leading-relaxed">
+                  "Menumbuhkan ketelitian saat membaca soal dan memberikan ruang eksplorasi sains tanpa tekanan nilai."
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <h3 class="font-serif font-bold text-gray-900 text-lg">Area yang Sedang Ditumbuhkan</h3>
+              <div class="space-y-2.5">
+                <div class="p-3.5 rounded-2xl bg-white border border-cream-border">
+                  <div class="flex items-center justify-between text-xs font-bold text-gray-800 mb-1">
+                    <span>Resiliensi (Ketekunan saat Sulit)</span>
+                    <span class="text-sage">Sedang Berkembang</span>
+                  </div>
+                  <p class="text-[11px] text-gray-500 leading-relaxed">Mulai mau mencoba kembali saat susunan menara roboh atau jawaban salah.</p>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-white border border-cream-border">
+                  <div class="flex items-center justify-between text-xs font-bold text-gray-800 mb-1">
+                    <span>Artikulasi Pendapat & Cerita</span>
+                    <span class="text-emerald-700">Kekuatan Alami</span>
+                  </div>
+                  <p class="text-[11px] text-gray-500 leading-relaxed">Sangat lancar menceritakan kembali hal yang ia temukan di luar rumah.</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-900">
+                📌 <strong>Catatan Penting:</strong> Profil ini adalah gambaran dinamis untuk membantu orang tua memilih kegiatan, bukan label permanen mengenai kemampuan anak.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 3: SCREENING AWAL ==================== -->
+      <section id="view-screening" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow">
+          <div class="max-w-2xl">
+            <span class="text-xs font-bold uppercase tracking-wider text-sage">Eksplorasi Kebutuhan Belajar</span>
+            <h2 class="font-serif font-bold text-2xl md:text-3xl text-gray-900 mt-1">Screening Awal Pengamatan di Rumah</h2>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Panduan pengamatan sederhana untuk membantu orang tua memahami gaya belajar, sensibilitas lingkungan, dan minat anak. 
+              <span class="text-gray-500 italic block mt-1">Bukan alat ukur psikologis atau diagnosis medis.</span>
+            </p>
+          </div>
+
+          <!-- Form Kuesioner Interaktif -->
+          <form id="screening-form" onsubmit="submitScreening(event)" class="mt-8 space-y-6 max-w-3xl">
+            <!-- Pertanyaan 1 -->
+            <div class="p-5 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <label class="block text-sm font-bold text-gray-900">
+                1. Saat menghadapi tantangan baru atau tugas yang agak sulit, apa respons pertama anak?
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq1" value="A" checked class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Langsung mencoba dengan caranya sendiri</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq1" value="B" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Mengamati dulu atau minta dicontohkan</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq1" value="C" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Cepat ragu dan butuh ditemani dari awal</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Pertanyaan 2 -->
+            <div class="p-5 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <label class="block text-sm font-bold text-gray-900">
+                2. Anak paling menikmati momen belajar ketika aktivitas disampaikan lewat apa?
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq2" value="kinestetik" checked class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Gerak fisik, merakit, menyentuh benda langsung</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq2" value="visual" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Gambar berwarna, buku cerita, video animasi</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq2" value="auditori" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Mengobrol, tanya jawab, mendengarkan dongeng</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Pertanyaan 3 -->
+            <div class="p-5 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <label class="block text-sm font-bold text-gray-900">
+                3. Bagaimana kenyamanan anak terhadap rangsangan di sekitarnya (suara bising, tekstur basah/lengket)?
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq3" value="peka" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Cukup peka, mudah terganggu suara ramai/tekstur tertentu</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq3" value="seimbang" checked class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Biasa saja, mudah beradaptasi dengan lingkungan</span>
+                </label>
+                <label class="flex items-start gap-2 p-3 rounded-xl bg-white border border-cream-border cursor-pointer hover:border-sage">
+                  <input type="radio" name="sq3" value="eksploratif" class="mt-0.5 text-sage focus:ring-sage">
+                  <span>Sangat suka menyentuh dan mencoba berbagai sensasi</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Pertanyaan 4 (Catatan Bebas Orang Tua) -->
+            <div class="p-5 rounded-2xl bg-cream border border-cream-border space-y-2">
+              <label class="block text-sm font-bold text-gray-900">
+                4. Ceritakan hal unik atau kebiasaan khas anak yang paling membanggakan atau menantang bagi Ayah/Bunda:
+              </label>
+              <textarea id="screening-custom-note" rows="3" placeholder="Contoh: Rafi sangat senang mencari serangga di taman dan bisa mengamati semut berjalan selama 15 menit tanpa bosan..." class="w-full text-xs p-3 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage"></textarea>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2">
+              <button type="submit" class="px-6 py-3 rounded-xl bg-sage text-white text-sm font-bold hover:bg-sage-dark transition shadow-md flex items-center gap-2">
+                <span>Simpan & Tampilkan Hasil Pemetaan</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </button>
+              <button type="button" onclick="document.getElementById('screening-form').reset()" class="text-xs text-gray-500 hover:text-gray-700">
+                Reset Pilihan
+              </button>
+            </div>
+          </form>
+
+          <!-- Kotak Hasil Pemetaan (Muncul setelah submit) -->
+          <div id="screening-result-box" class="mt-8 pt-8 border-t border-cream-border space-y-4">
+            <div class="p-6 rounded-3xl bg-sage-pale border border-sage/20 space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">🌱</span>
+                <div>
+                  <h3 class="font-serif font-bold text-lg text-sage-deep">Hasil Pengamatan Awal: Karakter Pembelajar Eksploratif</h3>
+                  <p class="text-xs text-sage">Diperbarui berdasarkan jawaban Bunda Sarah</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div class="bg-white p-3.5 rounded-2xl border border-sage/20">
+                  <strong class="text-sage block mb-1">Gaya Pendampingan:</strong>
+                  Berikan benda konkret dan kesempatan mencoba langsung sebelum memberikan rumus atau teori.
+                </div>
+                <div class="bg-white p-3.5 rounded-2xl border border-sage/20">
+                  <strong class="text-sage block mb-1">Karakter Pendamping Satwa:</strong>
+                  <span class="inline-flex items-center gap-1">🐻 <strong>Bimo Si Beruang Kuat</strong> (Melatih ketelitian & daya tahan)</span>
+                </div>
+                <div class="bg-white p-3.5 rounded-2xl border border-sage/20">
+                  <strong class="text-sage block mb-1">Rekomendasi Tema Misi:</strong>
+                  Eksplorasi alam terbuka, hitung objek fisik, permainan transaksi toko.
+                </div>
+              </div>
+
+              <div class="text-[11px] text-sage-deep/80 italic pt-1 border-t border-sage/15">
+                Hasil ini langsung diselaraskan ke tab <strong>Misi Belajar</strong> dan <strong>Profil Anak</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 4: MISI BELAJAR DI RUMAH ==================== -->
+      <section id="view-misi" class="fade-in space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif font-bold text-2xl md:text-3xl text-gray-900">Katalog Misi Belajar</h2>
+            <p class="text-xs text-gray-500 mt-1">Aktivitas bermakna 15-20 menit yang mudah dilakukan bersama anak di rumah</p>
+          </div>
+          <!-- Filter Kategori Misi -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+            <button onclick="filterMissions('all')" class="mission-filter-btn px-3 py-1.5 rounded-lg bg-sage text-white font-semibold">Semua</button>
+            <button onclick="filterMissions('alam')" class="mission-filter-btn px-3 py-1.5 rounded-lg bg-white border border-cream-border text-gray-600 hover:bg-cream">Alam & Sains</button>
+            <button onclick="filterMissions('logika')" class="mission-filter-btn px-3 py-1.5 rounded-lg bg-white border border-cream-border text-gray-600 hover:bg-cream">Logika & Hitung</button>
+            <button onclick="filterMissions('bahasa')" class="mission-filter-btn px-3 py-1.5 rounded-lg bg-white border border-cream-border text-gray-600 hover:bg-cream">Bahasa & Cerita</button>
+          </div>
+        </div>
+
+        <!-- Grid 6 Kartu Aktivitas -->
+        <div id="missions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 5: EKSPLORASI ==================== -->
+      <section id="view-eksplorasi" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow space-y-6">
+          <div class="max-w-2xl">
+            <span class="text-xs font-bold uppercase tracking-wider text-sage">Belajar di Luar Dinding Kelas</span>
+            <h2 class="font-serif font-bold text-2xl md:text-3xl text-gray-900 mt-1">Eksplorasi Alam, Satwa & Dunia Sekitar</h2>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Jadikan jalan-jalan akhir pekan dan kunjungan keluarga sebagai pengalaman belajar yang seru tanpa terasa seperti tes sekolah.
+            </p>
+          </div>
+
+          <!-- Kategori Eksplorasi Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200/60 card-hover transition">
+              <span class="text-3xl">🐾</span>
+              <h4 class="font-bold text-sm text-gray-900 mt-2">Dunia Satwa</h4>
+              <p class="text-xs text-gray-600 mt-1">Mengamati perilaku hewan, habitat, adaptasi, dan rantai makanan di alam bebas.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200/60 card-hover transition">
+              <span class="text-3xl">🏛️</span>
+              <h4 class="font-bold text-sm text-gray-900 mt-2">Museum & Sejarah</h4>
+              <p class="text-xs text-gray-600 mt-1">Membangun rasa ingin tahu lewat artefak zaman dulu dan cerita peradaban.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-sky-50 border border-sky-200/60 card-hover transition">
+              <span class="text-3xl">🔬</span>
+              <h4 class="font-bold text-sm text-gray-900 mt-2">Eksperimen Dapur</h4>
+              <p class="text-xs text-gray-600 mt-1">Melihat kimia & fisika sederhana saat membuat kue atau mencampur cairan.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200/60 card-hover transition">
+              <span class="text-3xl">🥬</span>
+              <h4 class="font-bold text-sm text-gray-900 mt-2">Pasar Tradisional</h4>
+              <p class="text-xs text-gray-600 mt-1">Mengenal timbangan, uang koin/kertas, asal sayuran, dan interaksi sosial santun.</p>
+            </div>
+          </div>
+
+          <!-- Contoh Studi Kasus Eksplorasi: Kebun Binatang -->
+          <div class="p-6 rounded-3xl bg-cream border border-cream-border space-y-4">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sage text-white uppercase">Panduan Praktis Akhir Pekan</span>
+                <h3 class="font-serif font-bold text-xl text-gray-900 mt-2">Kunjungan ke Kebun Binatang: Belajar 4 Bidang Sekaligus</h3>
+                <p class="text-xs text-gray-600 mt-1">Bagaimana kunjungan rekreasi bisa terhubung langsung dengan pelajaran anak di sekolah?</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-white rounded-xl border border-cream-border">
+                <strong class="text-sage block mb-1">🌿 Sains & Biologi:</strong>
+                Amati cara gajah makan vs jerapah menggapai daun pohon. Ajak anak mendiskusikan fungsi belalai dan leher panjang.
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-cream-border">
+                <strong class="text-sage block mb-1">🔢 Matematika Praktis:</strong>
+                Hitung jumlah kaki flamingo yang berdiri, tebak berat badan hewan, dan perhatikan jam jadwal makan satwa.
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-cream-border">
+                <strong class="text-sage block mb-1">📖 Bahasa & Kosa Kata:</strong>
+                Tulis 3 nama hewan unik yang baru pertama kali dilihat, lalu ceritakan kembali di rumah.
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-cream-border">
+                <strong class="text-sage block mb-1">❤️ Empati & Kepedulian:</strong>
+                Diskusikan kenapa satwa perlu dilindungi dan bagaimana menjaga kebersihan habitat alamnya.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 6: PROGRES ANAK ==================== -->
+      <section id="view-progres" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="font-serif font-bold text-2xl text-gray-900">Perjalanan & Perkembangan Anak</h2>
+              <p class="text-xs text-gray-500 mt-1">Mengutamakan narasi tumbuh kembang anak, bukan skor atau pemeringkatan.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-500">Periode:</span>
+              <span class="text-xs font-bold px-3 py-1 rounded-lg bg-cream border border-cream-border text-gray-800">Oktober 2026</span>
+            </div>
+          </div>
+
+          <!-- Highlight Mingguan Naratif -->
+          <div class="p-5 rounded-2xl bg-sage-pale border border-sage/20">
+            <div class="text-xs font-bold uppercase tracking-wider text-sage mb-1">Rangkuman Refleksi Pekan Ini</div>
+            <p id="progress-summary-narrative" class="text-xs md:text-sm text-gray-800 leading-relaxed font-medium">
+              "Pekan ini Rafi menunjukkan peningkatan ketekunan saat menyelesaikan tantangan susun pola. Ia tidak lagi langsung menyerah ketika baloknya jatuh, melainkan mencoba mencari sudut tumpuan baru sebelum meminta bantuan Bunda."
+            </p>
+          </div>
+
+          <!-- Statistik Aktivitas & Capaian (Tanpa Persentase Ilmiah Palsu) -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border text-center">
+              <div id="stat-completed-missions" class="text-2xl font-serif font-bold text-sage">8</div>
+              <div class="text-[11px] text-gray-500 mt-1">Misi Diselesaikan</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border text-center">
+              <div id="stat-journal-count" class="text-2xl font-serif font-bold text-amber-600">5</div>
+              <div class="text-[11px] text-gray-500 mt-1">Catatan Jurnal</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border text-center">
+              <div class="text-2xl font-serif font-bold text-emerald-600">12</div>
+              <div class="text-[11px] text-gray-500 mt-1">Sesi Les di Damping</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border text-center">
+              <div class="text-2xl font-serif font-bold text-purple-600">4</div>
+              <div class="text-[11px] text-gray-500 mt-1">Eksplorasi Satwa</div>
+            </div>
+          </div>
+
+          <!-- Riwayat Aktivitas Terbaru -->
+          <div class="space-y-3 pt-2">
+            <h3 class="font-serif font-bold text-lg text-gray-900">Riwayat Momen Belajar Terbaru</h3>
+            <div id="progress-history-list" class="space-y-2.5">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 7: JURNAL ORANG TUA ==================== -->
+      <section id="view-jurnal" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-sage">Ruang Privat Refleksi</span>
+              <h2 class="font-serif font-bold text-2xl text-gray-900 mt-1">Jurnal Pengamatan Orang Tua</h2>
+              <p class="text-xs text-gray-500 mt-1">Catat hal-hal berharga tanpa takut dinilai atau dibandingkan dengan anak lain.</p>
+            </div>
+            <button onclick="toggleJournalForm()" id="btn-toggle-journal-form" class="px-4 py-2.5 rounded-xl bg-sage text-white text-xs font-bold hover:bg-sage-dark transition shadow-sm flex items-center gap-1.5 self-start">
+              <span>+ Tulis Catatan Baru</span>
+            </button>
+          </div>
+
+          <!-- Formulir Tambah Jurnal (Bisa buka/tutup) -->
+          <form id="journal-form" onsubmit="submitJournal(event)" class="p-6 rounded-2xl bg-cream border border-cream-border space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-cream-border">
+              <span class="font-bold text-sm text-gray-800">Catat Pengamatan Hari Ini</span>
+              <span class="text-xs text-gray-500" id="journal-today-date">Hari ini</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Aktivitas yang Diamati</label>
+                <input id="j-activity" type="text" required placeholder="Contoh: Detektif Daun / Bermain Balok" class="w-full p-2.5 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage">
+              </div>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Apa yang membuat anak antusias?</label>
+                <input id="j-enjoy" type="text" placeholder="Contoh: Saat menemukan daun berbentuk bintang..." class="w-full p-2.5 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Apa yang sempat terasa sulit?</label>
+                <input id="j-hard" type="text" placeholder="Contoh: Sabar menghitung urutan ukuran..." class="w-full p-2.5 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage">
+              </div>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Apakah anak mencoba kembali?</label>
+                <select id="j-persistence" class="w-full p-2.5 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage">
+                  <option value="Langsung mencoba lagi">Langsung mencoba lagi dengan semangat</option>
+                  <option value="Butuh sedikit dorongan">Sempat ragu, tapi lanjut setelah didukung</option>
+                  <option value="Memilih jeda dulu">Memilih istirahat dulu, lalu kembali nanti</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-xs">
+              <label class="block font-bold text-gray-700 mb-1">Pencapaian kecil atau kata-kata berkesan anak hari ini:</label>
+              <textarea id="j-note" rows="2" placeholder="Contoh: Rafi bilang: 'Bunda, ternyata daun yang kering bunyinya krispi kalau diremas!'" class="w-full p-2.5 rounded-xl bg-white border border-cream-border focus:outline-none focus:border-sage"></textarea>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2">
+              <button type="submit" class="px-5 py-2.5 rounded-xl bg-sage text-white text-xs font-bold hover:bg-sage-dark transition shadow">
+                Simpan ke Jurnal Privat
+              </button>
+              <button type="button" onclick="toggleJournalForm()" class="text-xs text-gray-500 hover:text-gray-700">
+                Batal
+              </button>
+            </div>
+          </form>
+
+          <!-- List Entri Jurnal -->
+          <div class="space-y-4">
+            <h3 class="font-serif font-bold text-lg text-gray-900">Arsip Catatan Pengamatan</h3>
+            <div id="journal-entries-container" class="space-y-3">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 8: LAYANAN BELAJAR DAMPING ==================== -->
+      <section id="view-layanan" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow space-y-6">
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage-pale text-sage text-xs font-bold mb-2">
+              <span>🤝</span>
+              <span>Integrasi Ekosistem Damping</span>
+            </div>
+            <h2 class="font-serif font-bold text-2xl md:text-3xl text-gray-900">Layanan Les Privat & Pendampingan</h2>
+            <p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Damping menghubungkan pengamatan orang tua di rumah dengan bimbingan guru les privat profesional.
+            </p>
+          </div>
+
+          <!-- Kartu Guru yang Sedang Aktif -->
+          <div class="p-6 rounded-3xl bg-cream border border-cream-border space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-sage-dark text-white font-serif font-bold text-xl flex items-center justify-center shadow">
+                  MH
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-bold text-lg text-gray-900">Miss Hasna Ramadhani</h3>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Tutor Aktif</span>
+                  </div>
+                  <p class="text-xs text-gray-500">Guru Les Privat Matematika & Calistung · 12 Sesi Selesai</p>
+                </div>
+              </div>
+              <button onclick="openModal('modal-tutor-report')" class="px-4 py-2 rounded-xl bg-white border border-cream-border text-gray-700 text-xs font-bold hover:bg-cream-dark transition self-start sm:self-auto shadow-sm">
+                Buka Laporan Sesi Lengkap
+              </button>
+            </div>
+
+            <!-- Catatan Sesi Terakhir dari Guru -->
+            <div class="p-4 rounded-2xl bg-white border border-cream-border">
+              <div class="text-[11px] font-bold text-sage uppercase tracking-wider mb-1">Catatan Terakhir Guru untuk Orang Tua (Sesi 12):</div>
+              <p class="text-xs text-gray-700 leading-relaxed italic">
+                "Rafi menunjukkan kemajuan pesat dalam konsep pengurangan angka 1-20. Latihan mandiri di rumah lewat permainan toko-tokoan yang dicatat Bunda sangat terasa efeknya di kelas les!"
+              </p>
+            </div>
+          </div>
+
+          <!-- Rekomendasi Pengajar / Marketplace Damping -->
+          <div class="space-y-4 pt-2">
+            <div>
+              <h3 class="font-serif font-bold text-xl text-gray-900">Eksplorasi Pengajar Tambahan di Damping</h3>
+              <p class="text-xs text-gray-500">Sesuaikan dengan minat dan potensi unik anak Anda</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-5 rounded-2xl bg-white border border-cream-border card-hover transition space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Sains & Alam</span>
+                  <span class="text-xs font-semibold text-gray-500">Rating 4.9 ★</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-base text-gray-900">Kak Dian Pratama, S.Si</h4>
+                  <p class="text-xs text-gray-500">Guru Eksperimen & Sains Anak Usia Dini</p>
+                </div>
+                <p class="text-xs text-gray-600">Cocok untuk anak dengan minat tinggi pada observasi hewan dan eksperimen sederhana.</p>
+                <button onclick="showToast('Simulasi: Permintaan konsultasi guru telah dicatat.')" class="w-full py-2 rounded-xl bg-sage-pale hover:bg-sage hover:text-white text-sage font-bold text-xs transition">
+                  Konsultasikan Kebutuhan Belajar
+                </button>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white border border-cream-border card-hover transition space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Mengaji & Karakter</span>
+                  <span class="text-xs font-semibold text-gray-500">Rating 5.0 ★</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-base text-gray-900">Ustadzah Maryam</h4>
+                  <p class="text-xs text-gray-500">Guru Tahsin Al-Qur'an & Cerita Fitrah Anak</p>
+                </div>
+                <p class="text-xs text-gray-600">Pendekatan bercerita dan melatih adab belajar dengan sabar dan menyenangkan.</p>
+                <button onclick="showToast('Simulasi: Permintaan konsultasi guru telah dicatat.')" class="w-full py-2 rounded-xl bg-sage-pale hover:bg-sage hover:text-white text-sage font-bold text-xs transition">
+                  Konsultasikan Kebutuhan Belajar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SECTION 9: PENGATURAN ==================== -->
+      <section id="view-pengaturan" class="fade-in space-y-6 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 border border-cream-border card-shadow space-y-6">
+          <div>
+            <h2 class="font-serif font-bold text-2xl text-gray-900">Pengaturan Akun & Keluarga</h2>
+            <p class="text-xs text-gray-500 mt-1">Kelola preferensi akun, privasi data anak, dan pengingat harian</p>
+          </div>
+
+          <div class="space-y-4 max-w-xl text-xs">
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <strong class="text-sm font-bold text-gray-900 block">Informasi Orang Tua</strong>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <span class="text-gray-500 block">Nama Panggilan:</span>
+                  <span class="font-bold text-gray-800">Bunda Sarah</span>
+                </div>
+                <div>
+                  <span class="text-gray-500 block">Email Terdaftar:</span>
+                  <span class="font-bold text-gray-800">sarah.bunda@gmail.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <strong class="text-sm font-bold text-gray-900 block">Privasi & Berbagi Laporan ke Guru</strong>
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="font-medium text-gray-800 block">Izinkan Guru Membaca Ringkasan Minat Rumah</span>
+                  <span class="text-[11px] text-gray-500">Guru les privat Damping bisa melihat saran gaya belajar anak</span>
+                </div>
+                <input type="checkbox" checked class="w-4 h-4 text-sage rounded focus:ring-sage">
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-cream-border">
+                <div>
+                  <span class="font-medium text-gray-800 block">Kunci Catatan Jurnal Privat</span>
+                  <span class="text-[11px] text-gray-500">Refleksi pribadi Bunda tidak akan pernah terlihat oleh guru</span>
+                </div>
+                <input type="checkbox" checked class="w-4 h-4 text-sage rounded focus:ring-sage">
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-cream border border-cream-border space-y-3">
+              <strong class="text-sm font-bold text-gray-900 block">Kontrol Demo & Reset</strong>
+              <p class="text-gray-600 leading-relaxed">
+                Kembalikan seluruh data simulasi (anak, jurnal, misi, hasil screening) ke kondisi awal presentasi.
+              </p>
+              <button onclick="resetDemoData()" class="px-4 py-2 rounded-xl bg-rose-50 text-rose-700 border border-rose-200 font-bold hover:bg-rose-100 transition">
+                Reset Seluruh Data Demo
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== MOBILE BOTTOM NAVIGATION ==================== -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-cream-border py-2 px-3 z-30 flex items-center justify-around text-[10px]">
+    <button onclick="navigate('beranda')" class="nav-mob flex flex-col items-center gap-1 text-sage font-bold" data-target="beranda">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Beranda</span>
+    </button>
+    <button onclick="navigate('misi')" class="nav-mob flex flex-col items-center gap-1 text-gray-500 font-medium" data-target="misi">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>Misi</span>
+    </button>
+    <button onclick="navigate('jurnal')" class="nav-mob flex flex-col items-center gap-1 text-gray-500 font-medium" data-target="jurnal">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <span>Jurnal</span>
+    </button>
+    <button onclick="navigate('progres')" class="nav-mob flex flex-col items-center gap-1 text-gray-500 font-medium" data-target="progres">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      <span>Progres</span>
+    </button>
+    <button onclick="openModal('modal-menu-mobile')" class="nav-mob flex flex-col items-center gap-1 text-gray-500 font-medium">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+      <span>Lainnya</span>
+    </button>
+  </nav>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal Interaktif Player Misi -->
+  <div id="modal-mission-player" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto card-shadow p-6 md:p-8 space-y-5 fade-in">
+      <div class="flex items-start justify-between">
+        <div>
+          <span id="m-modal-category" class="text-[10px] font-bold px-2 py-0.5 rounded bg-sage-pale text-sage uppercase">Alam & Sains</span>
+          <h3 id="m-modal-title" class="font-serif font-bold text-2xl text-gray-900 mt-1">Detektif Daun</h3>
+          <p id="m-modal-subtitle" class="text-xs text-gray-500">Misi pendampingan 15 menit</p>
+        </div>
+        <button onclick="closeModal('modal-mission-player')" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg">✕</button>
+      </div>
+
+      <!-- Live Timer Countdown -->
+      <div class="p-4 rounded-2xl bg-cream border border-cream-border text-center space-y-2">
+        <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Timer Momen Bersama Anak</div>
+        <div id="mission-timer-display" class="font-serif text-3xl font-bold text-sage">15:00</div>
+        <div class="flex items-center justify-center gap-2 pt-1">
+          <button id="btn-timer-start" onclick="toggleTimer()" class="px-4 py-1.5 rounded-lg bg-sage text-white text-xs font-bold hover:bg-sage-dark transition">Mulai Timer</button>
+          <button onclick="resetTimer()" class="px-3 py-1.5 rounded-lg bg-white border border-cream-border text-gray-600 text-xs font-medium">Reset</button>
+        </div>
+      </div>
+
+      <!-- Bahan & Alat -->
+      <div class="space-y-2 text-xs">
+        <strong class="font-bold text-gray-900 block">Bahan Sederhana:</strong>
+        <p id="m-modal-materials" class="text-gray-600 bg-cream p-3 rounded-xl border border-cream-border">
+          3 lembar daun yang gugur dari jenis pohon berbeda, selembar kertas, pensil/krayon.
+        </p>
+      </div>
+
+      <!-- Langkah Praktis untuk Orang Tua -->
+      <div class="space-y-2 text-xs">
+        <strong class="font-bold text-gray-900 block">Langkah Pendampingan:</strong>
+        <ol id="m-modal-steps" class="space-y-2 text-gray-700 list-decimal pl-4">
+          <!-- Populated via JS -->
+        </ol>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-3 border-t border-cream-border flex flex-col sm:flex-row items-center gap-2.5">
+        <button onclick="completeCurrentMission()" class="w-full sm:w-auto flex-1 py-3 rounded-xl bg-sage hover:bg-sage-dark text-white font-bold text-xs transition shadow flex items-center justify-center gap-1.5">
+          <span>✓ Tandai Misi Selesai</span>
+        </button>
+        <button onclick="closeModal('modal-mission-player')" class="w-full sm:w-auto px-4 py-3 rounded-xl bg-cream text-gray-700 font-semibold text-xs">
+          Simpan Nanti
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Data Anak -->
+  <div id="modal-edit-profile" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full card-shadow p-6 space-y-4 fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-cream-border">
+        <h3 class="font-serif font-bold text-lg text-gray-900">Edit Data Anak (Simulasi)</h3>
+        <button onclick="closeModal('modal-edit-profile')" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+
+      <form onsubmit="saveProfileEdit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Nama Lengkap Anak</label>
+          <input id="edit-child-name" type="text" required class="w-full p-2.5 rounded-xl bg-cream border border-cream-border">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Usia (Tahun)</label>
+            <input id="edit-child-age" type="number" min="2" max="15" required class="w-full p-2.5 rounded-xl bg-cream border border-cream-border">
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Jenjang Pendidikan</label>
+            <select id="edit-child-grade" class="w-full p-2.5 rounded-xl bg-cream border border-cream-border">
+              <option value="PAUD / TK-A">PAUD / TK-A</option>
+              <option value="TK-B">TK-B</option>
+              <option value="Kelas 1 SD">Kelas 1 SD</option>
+              <option value="Kelas 2 SD">Kelas 2 SD</option>
+              <option value="Kelas 3 SD">Kelas 3 SD</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-gray-700 mb-1">Tujuan Pendampingan Bunda</label>
+          <textarea id="edit-child-goals" rows="2" class="w-full p-2.5 rounded-xl bg-cream border border-cream-border"></textarea>
+        </div>
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeModal('modal-edit-profile')" class="px-4 py-2 rounded-xl bg-cream text-gray-700 font-semibold">Batal</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-sage text-white font-bold">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Laporan Guru Damping (Preview Integrasi) -->
+  <div id="modal-tutor-report" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto card-shadow p-6 space-y-4 fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-cream-border">
+        <div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sage-pale text-sage uppercase">Portal Ortu Damping Eksisting</span>
+          <h3 class="font-serif font-bold text-lg text-gray-900 mt-1">Laporan Sesi Les Privat #12</h3>
+        </div>
+        <button onclick="closeModal('modal-tutor-report')" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-cream border border-cream-border space-y-3 text-xs">
+        <div class="flex justify-between">
+          <span class="text-gray-500">Materi Pelajaran:</span>
+          <span class="font-bold text-gray-900">Operasi Hitung Pengurangan 1-20</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500">Durasi Fokus:</span>
+          <span class="font-bold text-emerald-700">45 Menit Penuh</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500">Tingkat Pemahaman:</span>
+          <span class="font-bold text-sage">Sangat Baik (Bintang 5/5 ⭐)</span>
+        </div>
+        <div class="pt-2 border-t border-cream-border">
+          <strong class="text-gray-800 block mb-1">Catatan Evaluasi Guru:</strong>
+          <p class="text-gray-600 italic leading-relaxed">
+            "Rafi sangat terbantu ketika masalah matematika diubah menjadi cerita bergambar. Disarankan untuk terus melanjutkan latihan toko-tokoan di rumah."
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button onclick="closeModal('modal-tutor-report')" class="px-5 py-2 rounded-xl bg-sage text-white text-xs font-bold">
+          Tutup Laporan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Menu Mobile Selengkapnya -->
+  <div id="modal-menu-mobile" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+    <div class="bg-white rounded-t-3xl sm:rounded-3xl max-w-sm w-full p-6 space-y-3 fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-cream-border">
+        <span class="font-serif font-bold text-base text-gray-900">Menu Damping Ortu</span>
+        <button onclick="closeModal('modal-menu-mobile')" class="text-gray-400">✕</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="navigate('profil'); closeModal('modal-menu-mobile')" class="p-3 rounded-xl bg-cream text-left font-bold text-gray-800 hover:bg-sage-pale">
+          👤 Profil Anak
+        </button>
+        <button onclick="navigate('screening'); closeModal('modal-menu-mobile')" class="p-3 rounded-xl bg-cream text-left font-bold text-gray-800 hover:bg-sage-pale">
+          📋 Screening Awal
+        </button>
+        <button onclick="navigate('eksplorasi'); closeModal('modal-menu-mobile')" class="p-3 rounded-xl bg-cream text-left font-bold text-gray-800 hover:bg-sage-pale">
+          🐾 Eksplorasi Satwa
+        </button>
+        <button onclick="navigate('layanan'); closeModal('modal-menu-mobile')" class="p-3 rounded-xl bg-cream text-left font-bold text-gray-800 hover:bg-sage-pale">
+          👩‍🏫 Guru Damping
+        </button>
+        <button onclick="navigate('pengaturan'); closeModal('modal-menu-mobile')" class="p-3 rounded-xl bg-cream text-left font-bold text-gray-800 hover:bg-sage-pale col-span-2">
+          ⚙️ Pengaturan & Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Floating Box -->
+  <div id="toast-box" class="fixed bottom-20 md:bottom-8 right-6 bg-sage-dark text-white text-xs px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-2">
+    <span id="toast-icon">🌿</span>
+    <span id="toast-message" class="font-medium">Pemberitahuan</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT STATE ENGINE ==================== -->
+  <script>
+    // ---------- INITIAL DEMO STATE (LOCAL MEMORY / LOCAL STORAGE) ----------
+    const DEFAULT_DATA = {
+      activeChildId: 'rafi',
+      children: {
+        rafi: {
+          id: 'rafi',
+          name: 'Rafi Ramadhan',
+          age: 7,
+          grade: 'Kelas 1 SD',
+          avatarLetter: 'R',
+          goals: 'Menumbuhkan ketelitian saat membaca soal dan memberikan ruang eksplorasi sains tanpa tekanan nilai.',
+          interests: ['Alam & Satwa', 'Merakit & Balok', 'Angka & Teka-teki', 'Eksperimen'],
+          companion: { name: 'Bimo Si Beruang Kuat', role: 'Melatih Ketelitian & Resiliensi' },
+          quickAnswers: {
+            process: 'Rafi sedang fokus melatih ketelitian dan daya tahan menyelesaikan tugas mandiri.',
+            today: 'Misi 15 menit: Detektif Daun sebelum bermain sore.',
+            next: 'Hubungkan hasil pengamatan daun dengan sesi sains les privat besok Rabu.'
+          },
+          summaryNarrative: 'Pekan ini Rafi menunjukkan peningkatan ketekunan saat menyelesaikan tantangan susun pola. Ia tidak lagi langsung menyerah ketika baloknya jatuh, melainkan mencoba mencari sudut tumpuan baru sebelum meminta bantuan Bunda.',
+          completedMissionsCount: 3,
+          smallWins: [
+            { text: 'Rafi berani bertanya saat belum paham maksud kalimat di buku', date: 'Kemarin' },
+            { text: 'Berhasil mengamati 3 tekstur daun tanpa buru-buru', date: '2 hari lalu' },
+            { text: 'Merapikan balok susun secara mandiri setelah selesai bermain', date: '3 hari lalu' }
+          ]
+        },
+        alya: {
+          id: 'alya',
+          name: 'Alya Salsabila',
+          age: 4,
+          grade: 'PAUD / TK-A',
+          avatarLetter: 'A',
+          goals: 'Mengasah regulasi emosi saat bermain dan mengenalkan warna serta suara alam dengan ceria.',
+          interests: ['Menggambar & Warna', 'Musik & Nada', 'Cerita & Dongeng', 'Tekstur'],
+          companion: { name: 'Mimi Si Kucing Ceria', role: 'Regulasi Sensoris & Keberanian Bercerita' },
+          quickAnswers: {
+            process: 'Alya sedang aktif mengeksplorasi percampuran warna dan cerita interaktif.',
+            today: 'Misi 15 menit: Perjalanan Kupu-kupu (Mengenal Metamorfosis Ceria).',
+            next: 'Latih motorik halus lewat menempel kertas origami warna-warni.'
+          },
+          summaryNarrative: 'Alya semakin percaya diri mengungkapkan apa yang ia rasakan saat mewarnai. Ia mulai bisa bercerita mengapa ia memilih warna ungu untuk sayap kupu-kupunya.',
+          completedMissionsCount: 4,
+          smallWins: [
+            { text: 'Alya bisa memegang krayon dengan cengkeraman jari yang lebih rileks', date: 'Hari ini' },
+            { text: 'Tersenyum dan mau berbagi mainan cetakan pasir dengan sepupunya', date: 'Kemarin' }
+          ]
+        }
+      },
+      missions: [
+        {
+          id: 'detektif-daun',
+          category: 'alam',
+          categoryLabel: 'Alam & Sains',
+          title: 'Detektif Daun',
+          duration: '15 Menit',
+          skill: 'Observasi & Ketelitian',
+          desc: 'Ajak anak mengamati 3 jenis daun berbeda. Bandingkan bentuknya, rasakan teksturnya, dan urutkan dari yang terkecil.',
+          materials: '3 daun gugur berbeda di halaman, selembar kertas, pensil.',
+          steps: [
+            'Ajak anak ke halaman atau taman depan rumah.',
+            'Temukan 3 lembar daun yang sudah gugur dengan bentuk berbeda.',
+            'Raba bagian depan dan belakang daun bersama-sama. Tanyakan: "Yang ini rasanya halus atau kasar?"',
+            'Tantang anak menyusun daun tersebut dari yang paling kecil ke paling besar.'
+          ]
+        },
+        {
+          id: 'kupu-kupu',
+          category: 'alam',
+          categoryLabel: 'Alam & Sains',
+          title: 'Perjalanan Kupu-kupu',
+          duration: '20 Menit',
+          skill: 'Urutan Logika & Empati',
+          desc: 'Mengenal perubahan menakjubkan dari ulat menjadi kepompong hingga menjadi kupu-kupu bersayap indah.',
+          materials: 'Kertas gambar, pewarna, atau gerakan tubuh memperagakan ulat.',
+          steps: [
+            'Ceritakan secara singkat bagaimana ulat tidur di dalam kepompong.',
+            'Ajak anak melipat tangan seperti kepompong, lalu membuka sayap perlahan.',
+            'Minta anak menggambar sayap kupu-kupu dengan corak warna favoritnya.'
+          ]
+        },
+        {
+          id: 'toko-rumahan',
+          category: 'logika',
+          categoryLabel: 'Logika & Hitung',
+          title: 'Toko-tokoan di Rumah',
+          duration: '20 Menit',
+          skill: 'Hitung Dasar & Komunikasi',
+          desc: 'Latih kemampuan berhitung dan interaksi santun melalui permainan jual beli mainan atau buah di ruang tamu.',
+          materials: 'Beberapa mainan anak, uang kertas mainan / koin mainan, keranjang kecil.',
+          steps: [
+            'Susun 4-5 mainan di atas meja kecil dengan label harga sederhana (misal: 1 koin, 2 koin).',
+            'Bunda bertindak sebagai pembeli, biarkan anak menjadi kasir penjaga toko.',
+            'Latih anak menghitung jumlah koin yang harus dibayarkan dan mengembalikan kembalian.',
+            'Gunakan kata kunci santun: "Selamat datang", "Terima kasih", dan "Silakan datang kembali".'
+          ]
+        },
+        {
+          id: 'cerita-benda',
+          category: 'bahasa',
+          categoryLabel: 'Bahasa & Cerita',
+          title: 'Cerita dari Benda Favorit',
+          duration: '15 Menit',
+          skill: 'Artikulasi & Percaya Diri',
+          desc: 'Anak memilih satu benda kesayangan dan menceritakan mengapa benda itu istimewa bagi dirinya.',
+          materials: 'Satu benda favorit anak (boneka, mobil mainan, batu unik, atau buku).',
+          steps: [
+            'Minta anak memilih satu benda yang paling ia sukai di kamarnya.',
+            'Tanyakan 3 pertanyaan pemantik: "Dari mana asal benda ini?", "Kapan paling seru memainkannya?", "Kalau benda ini bisa bicara, apa yang ia katakan?"',
+            'Dengarkan tanpa memotong ceritanya selama 2 menit penuh.'
+          ]
+        },
+        {
+          id: 'bangun-menara',
+          category: 'logika',
+          categoryLabel: 'Logika & Hitung',
+          title: 'Tantangan Bangun Menara',
+          duration: '15 Menit',
+          skill: 'Resiliensi & Fisika Dasar',
+          desc: 'Bereksperimen menyusun balok atau cangkir plastik setinggi mungkin dan belajar tidak panik saat roboh.',
+          materials: 'Balok kayu, lego, atau cangkir plastik bekas.',
+          steps: [
+            'Tentukan target tinggi menara bersama anak.',
+            'Susun balok bersama. Jika roboh, katakan: "Wah roboh! Seru sekali suaranya, yuk kita cari cara biar bawahnya lebih kokoh!"',
+            'Bahas bentuk fondasi mana yang paling stabil (lebar di bawah vs ramping).'
+          ]
+        },
+        {
+          id: 'misi-kebaikan',
+          category: 'bahasa',
+          categoryLabel: 'Karakter & Sosial',
+          title: 'Misi Kebaikan Rahasia',
+          duration: '10 Menit',
+          skill: 'Empati & Kemandirian',
+          desc: 'Aktivitas kecil membantu anggota keluarga di rumah tanpa perlu diminta terlebih dahulu.',
+          materials: 'Niat baik, bantuan kecil (merapikan sendok, membawakan air minum).',
+          steps: [
+            'Bisikkan misi rahasia: "Yuk kita siapkan sandal Ayah/Bunda sebelum pulang kerja."',
+            'Lakukan dengan ceria tanpa mengharapkan hadiah kebendaan.',
+            'Refleksikan bagaimana perasaan anak setelah berhasil membuat orang lain tersenyum.'
+          ]
+        }
+      ],
+      journals: [
+        {
+          id: 1,
+          childId: 'rafi',
+          date: '18 Oktober 2026',
+          activity: 'Detektif Daun di Taman',
+          enjoy: 'Rafi sangat antusias saat menemukan daun yang ada bekas gigitan ulat.',
+          hard: 'Sempat kesulitan membedakan mana yang lebih besar antara daun mangga dan daun jambu.',
+          persistence: 'Langsung mencoba lagi dengan menempelkan kedua daun berdampingan.',
+          note: 'Rafi bilang: "Bunda, daun yang kena matahari lebih hijau ya daripada yang di bawah payung!"'
+        },
+        {
+          id: 2,
+          childId: 'rafi',
+          date: '16 Oktober 2026',
+          activity: 'Toko-tokoan Mainan',
+          enjoy: 'Menghitung uang koin mainan dan menyapa dengan gaya kasir minimarket.',
+          hard: 'Sedikit bingung saat kembalian bernilai 2 koin.',
+          persistence: 'Sempat ragu, tapi lanjut setelah Bunda bantu menghitung pakai jari.',
+          note: 'Membantu sekali untuk persiapan tes matematika dasar di sekolah.'
+        },
+        {
+          id: 3,
+          childId: 'alya',
+          date: '17 Oktober 2026',
+          activity: 'Perjalanan Kupu-kupu',
+          enjoy: 'Mengepakkan tangan sambil lari keliling ruang tamu menirukan kupu-kupu.',
+          hard: 'Mencampur warna krayon sampai agak keluar garis gambar.',
+          persistence: 'Tetap senang dan bangga memamerkan gambarnya ke Ayah.',
+          note: 'Alya sangat ekspresif ketika mendengarkan dongeng sebelum tidur.'
+        }
+      ]
+    };
+
+    // Load from localStorage or use default
+    let appState = null;
+    try {
+      const saved = localStorage.getItem('damping_parent_demo_state');
+      appState = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(DEFAULT_DATA));
+    } catch (e) {
+      appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('damping_parent_demo_state', JSON.stringify(appState));
+      } catch (e) {
+        console.warn('Cannot write to localStorage:', e);
+      }
+    }
+
+    // ---------- NAVIGATION ROUTER ----------
+    const views = ['beranda', 'profil', 'screening', 'misi', 'eksplorasi', 'progres', 'jurnal', 'layanan', 'pengaturan'];
+
+    function navigate(viewId) {
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const navEl = document.getElementById(`nav-${v}`);
+        if (el) el.classList.add('hidden');
+        if (navEl) {
+          navEl.classList.remove('bg-sage-pale', 'text-sage', 'font-semibold');
+          navEl.classList.add('text-gray-600', 'font-medium');
+        }
+      });
+
+      const targetView = document.getElementById(`view-${viewId}`);
+      const targetNav = document.getElementById(`nav-${viewId}`);
+      if (targetView) targetView.classList.remove('hidden');
+      if (targetNav) {
+        targetNav.classList.remove('text-gray-600', 'font-medium');
+        targetNav.classList.add('bg-sage-pale', 'text-sage', 'font-semibold');
+      }
+
+      // Update mobile nav highlight
+      document.querySelectorAll('.nav-mob').forEach(btn => {
+        if (btn.getAttribute('data-target') === viewId) {
+          btn.classList.add('text-sage', 'font-bold');
+          btn.classList.remove('text-gray-500', 'font-medium');
+        } else {
+          btn.classList.remove('text-sage', 'font-bold');
+          btn.classList.add('text-gray-500', 'font-medium');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---------- CHILD SWITCHER LOGIC ----------
+    function switchChild(childId) {
+      if (!appState.children[childId]) return;
+      appState.activeChildId = childId;
+      saveState();
+      renderAll();
+      showToast(`Beralih ke profil ${appState.children[childId].name}`);
+    }
+
+    // ---------- RENDER FUNCTIONS ----------
+    function renderAll() {
+      const child = appState.children[appState.activeChildId];
+      if (!child) return;
+
+      // Sync Selectors
+      const selSidebar = document.getElementById('child-select-sidebar');
+      if (selSidebar) selSidebar.value = child.id;
+
+      // Sidebar Profile
+      document.getElementById('sidebar-avatar').innerText = child.avatarLetter;
+      document.getElementById('sidebar-child-name').innerText = child.name;
+      document.getElementById('sidebar-child-age').innerText = `${child.age} tahun · ${child.grade}`;
+
+      // Beranda
+      document.getElementById('hero-child-name').innerText = child.name.split(' ')[0];
+      document.getElementById('quick-ans-1').innerText = child.quickAnswers.process;
+      document.getElementById('quick-ans-2').innerText = child.quickAnswers.today;
+      document.getElementById('quick-ans-3').innerText = child.quickAnswers.next;
+
+      // Small wins on home
+      const winsContainer = document.getElementById('home-small-wins-list');
+      if (winsContainer) {
+        winsContainer.innerHTML = child.smallWins.map(w => `
+          <div class="p-3 rounded-2xl bg-cream border border-cream-border flex items-start gap-2.5">
+            <span class="text-sage text-base mt-0.5">🌱</span>
+            <div class="flex-1 text-xs text-gray-800 leading-snug">
+              <span>${w.text}</span>
+              <span class="text-[10px] text-gray-500 block mt-0.5">${w.date}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Profil Tab
+      document.getElementById('profile-avatar').innerText = child.avatarLetter;
+      document.getElementById('profile-name').innerText = child.name;
+      document.getElementById('profile-meta').innerText = `${child.age} tahun · ${child.grade} · Terhubung dengan Damping`;
+      document.getElementById('profile-goals').innerText = `"${child.goals}"`;
+
+      const interestContainer = document.getElementById('profile-interests-chips');
+      if (interestContainer) {
+        interestContainer.innerHTML = child.interests.map(i => `
+          <span class="px-3 py-1.5 rounded-xl bg-sage-pale text-sage text-xs font-semibold">
+            ${i}
+          </span>
+        `).join('');
+      }
+
+      // Progres Tab
+      document.getElementById('progress-summary-narrative').innerText = `"${child.summaryNarrative}"`;
+      document.getElementById('stat-completed-missions').innerText = child.completedMissionsCount;
+
+      // Filter journals by active child
+      const childJournals = appState.journals.filter(j => j.childId === child.id);
+      document.getElementById('badge-jurnal-count').innerText = childJournals.length;
+      document.getElementById('stat-journal-count').innerText = childJournals.length;
+
+      // Progress History List
+      const historyContainer = document.getElementById('progress-history-list');
+      if (historyContainer) {
+        historyContainer.innerHTML = childJournals.map(j => `
+          <div class="p-3.5 rounded-2xl bg-cream border border-cream-border flex items-start justify-between gap-3 text-xs">
+            <div>
+              <div class="font-bold text-gray-900">${j.activity}</div>
+              <p class="text-gray-600 mt-0.5">${j.note || j.enjoy}</p>
+            </div>
+            <span class="text-[10px] text-gray-500 whitespace-nowrap">${j.date}</span>
+          </div>
+        `).join('');
+      }
+
+      // Render Missions Grid
+      renderMissions('all');
+
+      // Render Journals
+      renderJournals();
+    }
+
+    // ---------- MISSIONS LOGIC ----------
+    let activeMissionItem = null;
+
+    function renderMissions(filterCategory) {
+      const container = document.getElementById('missions-grid');
+      if (!container) return;
+
+      const items = filterCategory === 'all' 
+        ? appState.missions 
+        : appState.missions.filter(m => m.category === filterCategory);
+
+      container.innerHTML = items.map(m => `
+        <div class="bg-white rounded-3xl p-5 border border-cream-border card-shadow card-hover transition flex flex-col justify-between space-y-4">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold px-2 py-0.5 rounded bg-sage-pale text-sage uppercase text-[10px]">${m.categoryLabel}</span>
+              <span class="text-gray-500">⏱️ ${m.duration}</span>
+            </div>
+            <h3 class="font-serif font-bold text-lg text-gray-900 leading-snug">${m.title}</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">${m.desc}</p>
+            <div class="pt-1">
+              <span class="inline-block text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                🎯 ${m.skill}
+              </span>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-cream-border flex items-center gap-2">
+            <button onclick="openMissionModal('${m.id}')" class="flex-1 py-2.5 rounded-xl bg-sage hover:bg-sage-dark text-white text-xs font-bold transition shadow-sm">
+              Mulai Misi
+            </button>
+            <button onclick="markQuickComplete('${m.title}')" title="Tandai langsung selesai" class="p-2.5 rounded-xl bg-cream hover:bg-cream-dark text-gray-700 text-xs font-semibold border border-cream-border transition">
+              ✓
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterMissions(cat) {
+      document.querySelectorAll('.mission-filter-btn').forEach(b => {
+        b.classList.remove('bg-sage', 'text-white');
+        b.classList.add('bg-white', 'text-gray-600');
+      });
+      event.target.classList.remove('bg-white', 'text-gray-600');
+      event.target.classList.add('bg-sage', 'text-white');
+      renderMissions(cat);
+    }
+
+    function startMissionFromHome() {
+      openMissionModal('detektif-daun');
+    }
+
+    function openMissionModal(missionId) {
+      const item = appState.missions.find(m => m.id === missionId) || appState.missions[0];
+      activeMissionItem = item;
+
+      document.getElementById('m-modal-category').innerText = item.categoryLabel;
+      document.getElementById('m-modal-title').innerText = item.title;
+      document.getElementById('m-modal-subtitle').innerText = `Misi 15 menit bersama ${appState.children[appState.activeChildId].name.split(' ')[0]}`;
+      document.getElementById('m-modal-materials').innerText = item.materials;
+
+      const stepsContainer = document.getElementById('m-modal-steps');
+      stepsContainer.innerHTML = item.steps.map(s => `<li>${s}</li>`).join('');
+
+      resetTimer();
+      openModal('modal-mission-player');
+    }
+
+    function completeCurrentMission() {
+      if (!activeMissionItem) return;
+      const child = appState.children[appState.activeChildId];
+      child.completedMissionsCount++;
+
+      // Tambahkan small win
+      child.smallWins.unshift({
+        text: `Menyelesaikan misi ${activeMissionItem.title} dengan penuh antusias`,
+        date: 'Hari ini'
+      });
+
+      saveState();
+      renderAll();
+      closeModal('modal-mission-player');
+      showToast(`🎉 Hebat! Misi ${activeMissionItem.title} ditandai selesai!`);
+    }
+
+    function markQuickComplete(title) {
+      const child = appState.children[appState.activeChildId];
+      child.completedMissionsCount++;
+      child.smallWins.unshift({
+        text: `Menyelesaikan misi ${title}`,
+        date: 'Hari ini'
+      });
+      saveState();
+      renderAll();
+      showToast(`✓ Misi "${title}" ditandai selesai!`);
+    }
+
+    // ---------- COUNTDOWN TIMER LOGIC ----------
+    let timerInterval = null;
+    let timerSeconds = 15 * 60; // 15 menit
+    let isTimerRunning = false;
+
+    function formatTime(s) {
+      const m = Math.floor(s / 60);
+      const sec = s % 60;
+      return `${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('btn-timer-start');
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        btn.innerText = 'Lanjutkan';
+        btn.classList.remove('bg-amber-600');
+        btn.classList.add('bg-sage');
+      } else {
+        isTimerRunning = true;
+        btn.innerText = 'Jeda';
+        btn.classList.remove('bg-sage');
+        btn.classList.add('bg-amber-600');
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            document.getElementById('mission-timer-display').innerText = formatTime(timerSeconds);
+          } else {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            btn.innerText = 'Selesai!';
+            showToast('⏰ Waktu aktivitas selesai! Bagus sekali!');
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerSeconds = 15 * 60;
+      document.getElementById('mission-timer-display').innerText = '15:00';
+      const btn = document.getElementById('btn-timer-start');
+      if (btn) {
+        btn.innerText = 'Mulai Timer';
+        btn.classList.remove('bg-amber-600');
+        btn.classList.add('bg-sage');
+      }
+    }
+
+    // ---------- JURNAL LOGIC ----------
+    function toggleJournalForm() {
+      const form = document.getElementById('journal-form');
+      form.classList.toggle('hidden');
+    }
+
+    function renderJournals() {
+      const container = document.getElementById('journal-entries-container');
+      if (!container) return;
+
+      const activeChild = appState.activeChildId;
+      const entries = appState.journals.filter(j => j.childId === activeChild);
+
+      if (entries.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 rounded-2xl bg-cream border border-cream-border text-center text-xs text-gray-500">
+            Belum ada catatan jurnal untuk anak ini. Klik tombol di atas untuk mencatat pengamatan pertama!
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = entries.map(j => `
+        <div class="p-5 rounded-2xl bg-cream border border-cream-border space-y-3 fade-in">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-sage">${j.activity}</span>
+            <span class="text-gray-500 text-[11px]">${j.date}</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-gray-700">
+            <div>
+              <span class="text-gray-500 block text-[10px] uppercase font-bold">Yang Disukai:</span>
+              <span>${j.enjoy || '-'}</span>
+            </div>
+            <div>
+              <span class="text-gray-500 block text-[10px] uppercase font-bold">Tantangan:</span>
+              <span>${j.hard || '-'}</span>
+            </div>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-cream-border text-xs text-gray-800">
+            <strong class="text-sage block mb-0.5">Catatan Berkesan:</strong>
+            <span class="italic font-medium">"${j.note || '-'}"</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function submitJournal(e) {
+      e.preventDefault();
+      const activity = document.getElementById('j-activity').value;
+      const enjoy = document.getElementById('j-enjoy').value;
+      const hard = document.getElementById('j-hard').value;
+      const persistence = document.getElementById('j-persistence').value;
+      const note = document.getElementById('j-note').value;
+
+      const newEntry = {
+        id: Date.now(),
+        childId: appState.activeChildId,
+        date: 'Hari ini',
+        activity,
+        enjoy,
+        hard,
+        persistence,
+        note
+      };
+
+      appState.journals.unshift(newEntry);
+      saveState();
+      renderAll();
+      e.target.reset();
+      showToast('📖 Catatan jurnal berhasil disimpan!');
+    }
+
+    // ---------- SCREENING LOGIC ----------
+    function submitScreening(e) {
+      e.preventDefault();
+      const resultBox = document.getElementById('screening-result-box');
+      resultBox.classList.remove('hidden');
+
+      const customNote = document.getElementById('screening-custom-note').value;
+      if (customNote) {
+        appState.children[appState.activeChildId].smallWins.unshift({
+          text: `Pengamatan screening: ${customNote.slice(0, 70)}...`,
+          date: 'Baru saja'
+        });
+        saveState();
+        renderAll();
+      }
+
+      showToast('✨ Pemetaan pengamatan awal berhasil diperbarui!');
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ---------- EDIT PROFILE LOGIC ----------
+    function saveProfileEdit(e) {
+      e.preventDefault();
+      const child = appState.children[appState.activeChildId];
+      child.name = document.getElementById('edit-child-name').value;
+      child.age = parseInt(document.getElementById('edit-child-age').value) || child.age;
+      child.grade = document.getElementById('edit-child-grade').value;
+      child.goals = document.getElementById('edit-child-goals').value;
+      child.avatarLetter = child.name.charAt(0).toUpperCase();
+
+      saveState();
+      renderAll();
+      closeModal('modal-edit-profile');
+      showToast('✓ Data profil anak berhasil diperbarui!');
+    }
+
+    // ---------- MODALS HELPER ----------
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.remove('hidden');
+
+      if (id === 'modal-edit-profile') {
+        const child = appState.children[appState.activeChildId];
+        document.getElementById('edit-child-name').value = child.name;
+        document.getElementById('edit-child-age').value = child.age;
+        document.getElementById('edit-child-grade').value = child.grade;
+        document.getElementById('edit-child-goals').value = child.goals;
+      }
+    }
+
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.add('hidden');
+    }
+
+    // ---------- TOAST HELPER ----------
+    let toastTimeout = null;
+    function showToast(msg, icon = '🌿') {
+      const box = document.getElementById('toast-box');
+      const msgEl = document.getElementById('toast-message');
+      const iconEl = document.getElementById('toast-icon');
+
+      msgEl.innerText = msg;
+      iconEl.innerText = icon;
+
+      box.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+      box.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.remove('opacity-100', 'translate-y-0');
+        box.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+      }, 3500);
+    }
+
+    // ---------- RESET DEMO DATA ----------
+    function resetDemoData() {
+      if (confirm('Reset seluruh data demo ke kondisi awal?')) {
+        appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        saveState();
+        renderAll();
+        showToast('🔄 Seluruh data demo berhasil di-reset!');
+      }
+    }
+
+    // ---------- INITIAL BOOTSTRAP ----------
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+    });
+  </script>
+</body>
+</html>
